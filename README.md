@@ -1,2 +1,2 @@
 # py-saxo
-Python OpenAPI wrapper for Saxo Bank brokerage
+Python OpenAPI wrapper for Saxo Bank
