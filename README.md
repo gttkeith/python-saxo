@@ -20,6 +20,6 @@ from pysaxo import Session
 access = Session(app_key, auth_endpoint, token_endpoint, secret)
 ```
 
-An example has been provided in the repo, where app details are stored in a params.json file.
+An example main.py has been provided in the repo, where app details are stored in a params.json file.
 
 py-saxo negotiates the authentication procedure using the complete OAuth2 authorization flow. Sessions are proactively refreshed to prevent unexpected logouts.
