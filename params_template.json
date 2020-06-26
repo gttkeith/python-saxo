@@ -1,7 +1,6 @@
 {
     "app_key": "",
-    "auth_endpoint": "https://sim.logonvalidation.net/authorize",
-    "token_endpoint": "https://sim.logonvalidation.net/token",
-    "redir_uri": "http://gttkeith.github.io/py-saxo/authcode",
+    "auth_endpoint": "",
+    "token_endpoint": "",
     "secret": ""
 }

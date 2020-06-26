@@ -1,4 +1,4 @@
-# py-saxo
+# python-saxo
 Python OpenAPI wrapper for Saxo Bank
 
 ### You'll need  
@@ -13,6 +13,13 @@ Create an app on your developer account (both DEMO/LIVE should work) using the f
 * Grant Type: Code
 * Access control: ☑ Allow this app to be enabled for trading
 
-Create a file params.json using the repo template. Fill params.json with your app's details from the developer page and you'll be good to go.
+Creating a new session:
+
+```python
+from pysaxo import Session
+access = Session(app_key, auth_endpoint, token_endpoint, secret)
+```
+
+An example has been provided in the repo, where app details are stored in a params.json file.
 
 py-saxo negotiates the authentication procedure using the complete OAuth2 authorization flow. Sessions are proactively refreshed to prevent unexpected logouts.
