@@ -9,7 +9,7 @@ Python OpenAPI wrapper for Saxo Bank
 ### Info    
 Create an app on your developer account (both DEMO/LIVE should work) using the following settings:
 
-* Redirect URL: http://gttkeith.github.io/py-saxo/authcode
+* Redirect URL: http://gttkeith.github.io/python-saxo/authcode
 * Grant Type: Code
 * Access control: ☑ Allow this app to be enabled for trading
 
