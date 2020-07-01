@@ -1,4 +1,5 @@
 import json
+import traceback
 from pysaxo import Session
 
 PARAMS_PATH = 'params.json'
@@ -9,4 +10,14 @@ AUTH_ENDPOINT = params.get('auth_endpoint')
 TOKEN_ENDPOINT = params.get('token_endpoint')
 SECRET = params.get('secret')
 
-access = Session(APP_KEY, AUTH_ENDPOINT, TOKEN_ENDPOINT, SECRET)
+a = Session(APP_KEY, AUTH_ENDPOINT, TOKEN_ENDPOINT, SECRET)
+
+print("[Authorised, use a.get(uri) for API access]")
+exit=False
+while exit is False:
+    cmd=input("> ")
+    try:
+        out=eval(cmd)
+        print(out)
+    except:
+        print("\n** EXCEPTION **\n",traceback.format_exc(),"\n")

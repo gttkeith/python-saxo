@@ -2,6 +2,7 @@ import random
 import requests
 import threading
 
+API_URL = "https://gateway.saxobank.com/sim/openapi"
 REDIR_URI = "http://gttkeith.github.io/python-saxo/authcode"
 
 class Session:
@@ -9,6 +10,15 @@ class Session:
     def new_state(stringLength=16):
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
         return ''.join(random.choice(chars) for i in range(stringLength))
+
+    @staticmethod
+    def process_uri(uri):
+        if isinstance(uri, list):
+            l = ['/'+s for s in uri]
+            uri = ''.join(l)
+        if not uri[0]=='/':
+            uri = '/'+uri
+        return uri
 
     def parse_json(self, tokenJson):
         self.token = tokenJson.get('access_token')
@@ -32,3 +42,6 @@ class Session:
         tokenJson = requests.post(self.token_endpoint, params={'grant_type':'authorization_code','code':authcode,'redirect_uri':REDIR_URI,'client_id':self.app_key,'client_secret':self.secret}).json()
         self.parse_json(tokenJson)
         threading.Timer(1, self.periodic_token_refresh).start()
+    
+    def get(self,uri,params={}):
+        return requests.get(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
