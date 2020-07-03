@@ -12,7 +12,7 @@ SECRET = params.get('secret')
 
 a = Session(APP_KEY, AUTH_ENDPOINT, TOKEN_ENDPOINT, SECRET)
 
-print("[Authorised, use a.get(uri) for API access]")
+print("[Authorised, use a.get/post/delete(uri,params={}) for API access]")
 exit=False
 while exit is False:
     cmd=input("> ")

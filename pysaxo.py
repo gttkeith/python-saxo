@@ -45,3 +45,9 @@ class Session:
     
     def get(self,uri,params={}):
         return requests.get(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+    
+    def post(self,uri,params={}):
+        return requests.post(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+    
+    def delete(self,uri,params={}):
+        return requests.delete(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
