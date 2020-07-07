@@ -6,12 +6,17 @@ Python OpenAPI wrapper for Saxo Bank
 * [requests](https://requests.readthedocs.io/en/master/) for Python
 * [Saxo Developer Account](https://www.developer.saxo/)
 
-### Info    
-Create an app on your developer account (both DEMO/LIVE should work) using the following settings:
+### Usage
+
+Create an app on your developer account (both DEMO/LIVE will work) using the following settings:
 
 * Redirect URL: http://gttkeith.github.io/python-saxo/authcode
 * Grant Type: Code
 * Access control: ☑ Allow this app to be enabled for trading
+
+An example main.py has been provided in the repo, where app details are stored in a params.json file.
+
+pysaxo negotiates the authentication procedure using the complete OAuth2 authorisation flow. Sessions are proactively refreshed to prevent unexpected logouts.
 
 Creating a new session:
 
@@ -20,6 +25,14 @@ from pysaxo import Session
 access = Session(app_key, auth_endpoint, token_endpoint, secret)
 ```
 
-An example main.py has been provided in the repo, where app details are stored in a params.json file.
+Performing basic HTTP requests:
 
-pysaxo negotiates the authentication procedure using the complete OAuth2 authorisation flow. Sessions are proactively refreshed to prevent unexpected logouts.
+```python
+# get information about authorised user
+access.get('port/v1/users/me')
+
+# retrieve a list of FX spot instruments containing SGD
+access.get('ref/v1/instruments', params={'KeyWords':'SGD', 'AssetTypes':'FxSpot'})
+```
+
+For a comprehensive overview of available endpoints, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
