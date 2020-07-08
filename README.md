@@ -8,7 +8,7 @@ Python OpenAPI wrapper for Saxo Bank
 
 ### Usage
 
-Create an app on your developer account (both DEMO/LIVE will work) using the following settings:
+Create an app on your developer account (for either DEMO or LIVE) using the following settings:
 
 * Redirect URL: http://gttkeith.github.io/python-saxo/authcode
 * Grant Type: Code
@@ -25,14 +25,16 @@ from pysaxo import Session
 access = Session(app_key, auth_endpoint, token_endpoint, secret)
 ```
 
-Performing basic HTTP requests:
+Performing requests:
 
 ```python
 # get information about authorised user
 access.get('port/v1/users/me')
 
 # retrieve a list of FX spot instruments containing SGD
-access.get('ref/v1/instruments', params={'KeyWords':'SGD', 'AssetTypes':'FxSpot'})
+access.get('ref/v1/instruments', KeyWords='SGD', AssetTypes='FxSpot')
 ```
+
+Query parameters are case-sensitive.
 
 For a comprehensive overview of available endpoints, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).

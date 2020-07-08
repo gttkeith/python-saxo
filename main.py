@@ -1,4 +1,5 @@
 import json
+import pprint
 import traceback
 from pysaxo import Session
 
@@ -10,14 +11,15 @@ AUTH_ENDPOINT = params.get('auth_endpoint')
 TOKEN_ENDPOINT = params.get('token_endpoint')
 SECRET = params.get('secret')
 
-a = Session(APP_KEY, AUTH_ENDPOINT, TOKEN_ENDPOINT, SECRET)
+access = Session(APP_KEY, AUTH_ENDPOINT, TOKEN_ENDPOINT, SECRET)
 
-print("[Authorised, use a.get/post/delete(uri,params={}) for API access]")
+print("[Authorised, use access.get/post/put/delete(uri) for API access]")
 exit=False
+pp = pprint.PrettyPrinter(indent=2)
 while exit is False:
     cmd=input("> ")
     try:
         out=eval(cmd)
-        print(out)
+        pp.pprint(out)
     except:
         print("\n** EXCEPTION **\n",traceback.format_exc(),"\n")

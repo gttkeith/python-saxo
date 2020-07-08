@@ -3,7 +3,9 @@ import requests
 import threading
 
 API_URL = "https://gateway.saxobank.com/sim/openapi"
+ME_URI = "port/v1/users/me"
 REDIR_URI = "http://gttkeith.github.io/python-saxo/authcode"
+ACCOUNT_KEY = 'ClientKey'
 
 class Session:
     @staticmethod
@@ -20,6 +22,11 @@ class Session:
             uri = '/'+uri
         return uri
 
+    def process_params(self, params):
+        if 'AccountKey' not in params.keys():
+            params['AccountKey'] = self.account_key
+        return params
+
     def parse_json(self, tokenJson):
         self.token = tokenJson.get('access_token')
         self.expires_in = int(tokenJson.get('expires_in'))
@@ -30,24 +37,34 @@ class Session:
         if self.expires_in < 60:
             tokenJson = requests.post(self.token_endpoint, params={'grant_type':'refresh_token','refresh_token':self.refresh,'redirect_uri':REDIR_URI,'client_id':self.app_key,'client_secret':self.secret}).json()
             self.parse_json(tokenJson)
+    
+    def get(self, uri, **params):
+        params = self.process_params(params)
+        return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+    
+    def post(self, uri, **params):
+        params = self.process_params(params)
+        return requests.post(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
 
-    def __init__(self,app_key,auth_endpoint,token_endpoint,secret):
+    def put(self, uri, **params):
+        params = self.process_params(params)
+        return requests.put(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+    
+    def delete(self, uri, **params):
+        params = self.process_params(params)
+        return requests.delete(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+
+    def __init__(self, app_key, auth_endpoint, token_endpoint, secret):
         self.app_key = app_key
         self.auth_endpoint = auth_endpoint
         self.token_endpoint = token_endpoint
         self.secret = secret
+
         r = requests.get(self.auth_endpoint, params={'response_type':'code','client_id':self.app_key,'state':Session.new_state(),'redirect_uri':REDIR_URI})
         print("Log in and obtain authcode: " + r.url)
         authcode = input("Paste authcode: ")
         tokenJson = requests.post(self.token_endpoint, params={'grant_type':'authorization_code','code':authcode,'redirect_uri':REDIR_URI,'client_id':self.app_key,'client_secret':self.secret}).json()
         self.parse_json(tokenJson)
         threading.Timer(1, self.periodic_token_refresh).start()
-    
-    def get(self,uri,params={}):
-        return requests.get(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
-    
-    def post(self,uri,params={}):
-        return requests.post(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
-    
-    def delete(self,uri,params={}):
-        return requests.delete(API_URL+process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+
+        self.account_key = requests.get(API_URL+'/'+ME_URI,headers={'Authorization':'Bearer '+self.token}).json()[ACCOUNT_KEY]
