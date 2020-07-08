@@ -39,20 +39,16 @@ class Session:
             self.parse_json(tokenJson)
     
     def get(self, uri, **params):
-        params = self.process_params(params)
-        return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+        return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
     
     def post(self, uri, **params):
-        params = self.process_params(params)
-        return requests.post(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+        return requests.post(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
 
     def put(self, uri, **params):
-        params = self.process_params(params)
-        return requests.put(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+        return requests.put(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
     
     def delete(self, uri, **params):
-        params = self.process_params(params)
-        return requests.delete(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=params).json()
+        return requests.delete(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
 
     def __init__(self, app_key, auth_endpoint, token_endpoint, secret):
         self.app_key = app_key

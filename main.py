@@ -17,9 +17,12 @@ print("[Authorised, use access.get/post/put/delete(uri) for API access]")
 exit=False
 pp = pprint.PrettyPrinter(indent=2)
 while exit is False:
-    cmd=input("> ")
+    cmd=input('> ')
     try:
-        out=eval(cmd)
-        pp.pprint(out)
+        if cmd is 'exit':
+            exit = True
+        else:
+            out=eval(cmd)
+            pp.pprint(out)
     except:
         print("\n** EXCEPTION **\n",traceback.format_exc(),"\n")
