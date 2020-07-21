@@ -1,5 +1,5 @@
 # python-saxo
-Python OpenAPI wrapper for Saxo Bank
+Python wrapper for Saxo Bank's OpenAPI
 
 ### You'll need  
 * Python 3.4 or above
