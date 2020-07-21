@@ -37,6 +37,9 @@ class Session:
         if self.expires_in < 60:
             tokenJson = requests.post(self.token_endpoint, params={'grant_type':'refresh_token','refresh_token':self.refresh,'redirect_uri':REDIR_URI,'client_id':self.app_key,'client_secret':self.secret}).json()
             self.parse_json(tokenJson)
+
+    def stream(self, uri, **params):
+        return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token,'contextId':self.state},params=self.process_params(params),stream=True)
     
     def get(self, uri, **params):
         return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
@@ -49,14 +52,15 @@ class Session:
     
     def delete(self, uri, **params):
         return requests.delete(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
-
+    
     def __init__(self, app_key, auth_endpoint, token_endpoint, secret):
+        self.state = Session.new_state()
         self.app_key = app_key
         self.auth_endpoint = auth_endpoint
         self.token_endpoint = token_endpoint
         self.secret = secret
 
-        r = requests.get(self.auth_endpoint, params={'response_type':'code','client_id':self.app_key,'state':Session.new_state(),'redirect_uri':REDIR_URI})
+        r = requests.get(self.auth_endpoint, params={'response_type':'code','client_id':self.app_key,'state':self.state,'redirect_uri':REDIR_URI})
         print("Log in and obtain authcode: " + r.url)
         authcode = input("Paste authcode: ")
         tokenJson = requests.post(self.token_endpoint, params={'grant_type':'authorization_code','code':authcode,'redirect_uri':REDIR_URI,'client_id':self.app_key,'client_secret':self.secret}).json()
