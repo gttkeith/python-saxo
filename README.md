@@ -1,5 +1,5 @@
 # python-saxo
-Python OpenAPI wrapper for Saxo Bank
+Python wrapper for Saxo Bank's OpenAPI
 
 ### You'll need  
 * Python 3.4 or above
@@ -37,4 +37,4 @@ access.get('ref/v1/instruments', KeyWords='SGD', AssetTypes='FxSpot')
 
 Query parameters are case-sensitive.
 
-For a comprehensive overview of available endpoints, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
+For a comprehensive overview of available endpoints and query/response formats, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
