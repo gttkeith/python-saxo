@@ -14,7 +14,7 @@ Create an app on your developer account (for either DEMO or LIVE) using the foll
 * Grant Type: Code
 * Access control: ☑ Allow this app to be enabled for trading
 
-An example main.py has been provided in the repo, where app details are stored in a `params.json` file. Queries can be made through the console, and results are dumped into `out.csv` in the same directory.
+An example `main.py` has been provided in the repo, where app details are stored in a `params.json` file. Queries can be made through the console, and results are dumped into `out.csv` in the same directory.
 
 pysaxo negotiates the authentication procedure using the complete OAuth2 authorisation flow. Sessions are proactively refreshed to prevent unexpected logouts.
 
