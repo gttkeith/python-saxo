@@ -34,7 +34,7 @@ access.get('port/v1/users/me')
 # retrieve a list of FX spot instruments containing SGD
 access.get('ref/v1/instruments', KeyWords='SGD', AssetTypes='FxSpot')
 
-# retrieve the historical 1H bid/ask prices of asset UIC 45: USDSGD
+# retrieve the historical 1H:1M bid/asks of asset UIC 45: USDSGD
 access.get('chart/v1/charts', Uic=45, AssetType='FxSpot', Horizon=60)
 ```
 

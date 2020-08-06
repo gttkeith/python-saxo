@@ -68,3 +68,40 @@ class Session:
         threading.Timer(1, self.periodic_token_refresh).start()
 
         self.account_key = requests.get(API_URL+'/'+ME_URI,headers={'Authorization':'Bearer '+self.token}).json()[ACCOUNT_KEY]
+
+class SaxoDateTime:
+    @staticmethod
+    def from_string(inp):
+        y = int(inp[0:4])
+        mo = int(inp[5:7])
+        d = int(inp[8:10])
+        h = int(inp[11:13])
+        mi = int(inp[14:16])
+        s = float(inp[17:26])
+        return DateTime(y, mo, d, h, mi, s)
+
+    def __init__(self, y, mo, d, h, mi, s):
+        self.datetime = []
+        self.datetime.append(y)
+        self.datetime.append(mo)
+        self.datetime.append(d)
+        self.datetime.append(h)
+        self.datetime.append(mi)
+        self.datetime.append(s)
+
+    def is_later_than(self, other_dt):
+        for i in range(len(self.datetime)):
+            if self.datetime[i] > other_dt.datetime[i]:
+                return True
+            elif self.datetime[i] < other_dt.datetime[i]:
+                return False
+        return False
+
+    def equals(self, other_dt):
+        for i in range(len(self.datetime)):
+            if self.datetime[i] != other_dt.datetime[i]:
+                return False
+        return True
+
+    def to_string(self):
+        return '{0:04d}-{1:02d}-{2:02d}T{3:02d}:{4:02d}:{5:02.6f}Z'.format(*self.datetime)
