@@ -78,7 +78,7 @@ class SaxoDateTime:
         h = int(inp[11:13])
         mi = int(inp[14:16])
         s = float(inp[17:26])
-        return DateTime(y, mo, d, h, mi, s)
+        return SaxoDateTime(y, mo, d, h, mi, s)
 
     def __init__(self, y, mo, d, h, mi, s):
         self.datetime = []
