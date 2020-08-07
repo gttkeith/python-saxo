@@ -68,11 +68,13 @@ class Session:
 
         self.account_key = requests.get(API_URL+'/'+ME_URI,headers={'Authorization':'Bearer '+self.token}).json()[ACCOUNT_KEY]
 
-class SaxoDateTime(datetime):
+class UtcDateTime(datetime):
     @staticmethod
     def from_string(inp):
         return SaxoDateTime.fromisoformat(inp.replace('T',' ').replace('Z',''))
     
+    def __str__(self):
+        return self.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    
     def to_string(self):
-        dtlist = [self.year,self.month,self.day,self.hour,self.minute,self.second,self.microsecond]
-        return '{0:04d}-{1:02d}-{2:02d}T{3:02d}:{4:02d}:{5:02d}.{6:06d}Z'.format(*dtlist)
+        return self.__str__()
