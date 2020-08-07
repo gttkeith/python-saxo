@@ -71,7 +71,7 @@ class Session:
 class UtcDateTime(datetime):
     @staticmethod
     def from_string(inp):
-        return SaxoDateTime.fromisoformat(inp.replace('T',' ').replace('Z',''))
+        return UtcDateTime.strptime(inp,'%Y-%m-%dT%H:%M:%S.%fZ')
     
     def __str__(self):
         return self.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
