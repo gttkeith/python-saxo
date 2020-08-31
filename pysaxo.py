@@ -20,7 +20,22 @@ class Session:
         if not uri[0]=='/':
             uri = '/'+uri
         return uri
-
+    
+    @staticmethod
+    def recursive_retype(data):
+        if isinstance(data,dict):
+            res = {}
+            for k,v in data.items():
+                res[k] = recursive_retype(v)
+            return res
+        elif isinstance(data,list):
+            return [recursive_retype(v) for v in data]
+        else:
+            try:
+                return UtcDateTime.from_string(data)
+            except:
+                return data
+    
     def process_params(self, params):
         if 'AccountKey' not in params.keys():
             params['AccountKey'] = self.account_key

@@ -1,6 +1,6 @@
 {
     "app_key": "",
-    "auth_endpoint": "",
-    "token_endpoint": "",
+    "auth_endpoint": "https://sim.logonvalidation.net/authorize",
+    "token_endpoint": "https://sim.logonvalidation.net/token",
     "secret": ""
 }
