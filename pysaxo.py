@@ -21,21 +21,6 @@ class Session:
             uri = '/'+uri
         return uri
     
-    @staticmethod
-    def recursive_retype(data):
-        if isinstance(data,dict):
-            res = {}
-            for k,v in data.items():
-                res[k] = recursive_retype(v)
-            return res
-        elif isinstance(data,list):
-            return [recursive_retype(v) for v in data]
-        else:
-            try:
-                return UtcDateTime.from_string(data)
-            except:
-                return data
-    
     def process_params(self, params):
         if 'AccountKey' not in params.keys():
             params['AccountKey'] = self.account_key
@@ -56,7 +41,7 @@ class Session:
         return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token,'contextId':self.state},params=self.process_params(params),stream=True)
     
     def get(self, uri, **params):
-        return requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
+        return TypeManager.ensure_type_robustness(requests.get(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json())
     
     def post(self, uri, **params):
         return requests.post(API_URL+Session.process_uri(uri),headers={'Authorization':'Bearer '+self.token},params=self.process_params(params)).json()
@@ -82,6 +67,22 @@ class Session:
         threading.Timer(1, self.periodic_token_refresh).start()
 
         self.account_key = requests.get(API_URL+'/'+ME_URI,headers={'Authorization':'Bearer '+self.token}).json()[ACCOUNT_KEY]
+
+class TypeManager():
+    @staticmethod
+    def ensure_type_robustness(data):
+        if isinstance(data,dict):
+            res = {}
+            for k,v in data.items():
+                res[k] = TypeManager.ensure_type_robustness(v)
+            return res
+        elif isinstance(data,list):
+            return [TypeManager.ensure_type_robustness(v) for v in data]
+        else:
+            try:
+                return UtcDateTime.from_string(data)
+            except:
+                return data
 
 class UtcDateTime(datetime):
     @staticmethod
