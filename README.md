@@ -40,4 +40,4 @@ access.get('chart/v1/charts', Uic=45, AssetType='FxSpot', Horizon=60)
 
 Query parameters are case-sensitive.
 
-python-saxo is deliberately designed in an abstract manner, and will retain compatbility through changes in Saxo's API endpoints. For a comprehensive overview of available endpoints and query/response formats, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
+python-saxo is deliberately designed in an abstract manner, and will retain compatibility through changes in Saxo's API endpoints. For a comprehensive overview of available endpoints and query/response formats, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
