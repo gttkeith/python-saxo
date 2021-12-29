@@ -22,22 +22,22 @@ Creating a new session:
 
 ```python
 from pysaxo import Session
-access = Session(app_key, auth_endpoint, token_endpoint, secret)
+s = Session(app_key, auth_endpoint, token_endpoint, secret)
 ```
 
 Performing requests:
 
 ```python
 # get information about authorised user
-access.get('port/v1/users/me')
+s.get('port/v1/users/me')
 
 # retrieve a list of FX spot instruments containing SGD
-access.get('ref/v1/instruments', KeyWords='SGD', AssetTypes='FxSpot')
+s.get('ref/v1/instruments', KeyWords='SGD', AssetTypes='FxSpot')
 
 # retrieve the historical 1H:1M bid/asks of asset UIC 45: USDSGD
-access.get('chart/v1/charts', Uic=45, AssetType='FxSpot', Horizon=60)
+s.get('chart/v1/charts', Uic=45, AssetType='FxSpot', Horizon=60)
 ```
 
 Query parameters are case-sensitive.
 
-python-saxo is deliberately designed in an abstract manner, and will retain compatibility through changes in Saxo's API endpoints. For a comprehensive overview of available endpoints and query/response formats, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
+python-saxo is deliberately minimal, and will retain compatibility through changes in Saxo's API endpoints. For a comprehensive overview of available endpoints and query/response formats, please refer to the [Saxo OpenAPI documentation](https://www.developer.saxo/openapi/learn).
